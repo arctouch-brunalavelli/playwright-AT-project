@@ -70,3 +70,45 @@ text ├── .github/ # CI/CD Workflows (configured for GitHub Actions) ├─
 * **Language:** TypeScript
 * **Test Runner:** Playwright Test
 * **Framework:** Node.js
+
+
+
+---
+
+## ➕ How to Add New Tests
+
+Follow these steps to expand the test suite with new automation flows:
+
+### 1. Create a New Test File
+Navigate to the `tests/` directory and create a new file. Ensure it ends with `.test.ts` (or `.spec.ts`) so Playwright's test runner can automatically detect it.
+* Example: `tests/login-flow.test.ts`
+
+### 2. Write the Test Structure
+Open your new file and paste the basic Playwright template structure:
+
+typescript import { test, expect } from '@playwright/test';
+
+test('Verify successful user login', async ({ page }) => { // 1. Navigate to the website await page.goto('https://arctouch.com/');
+
+// 2. Perform actions (e.g. click buttons, fill forms) // await page.getByRole('button', { name: 'Login' }).click();
+
+// 3. Make assertions (verify the outcome) // await expect(page).toHaveURL(/.*dashboard/); });
+
+
+### 3. (Optional) Use CodeGen to Record Your Actions
+If you want Playwright to write the selectors for you dynamically while you click through the website:
+npx playwright codegen https://arctouch.com/
+
+*This opens a browser and a code recorder. Once you finish recording, copy the generated code and paste it into your test file.*
+
+### 4. Run and Validate Your New Test
+Run your specific new test locally to make sure it passes before pushing:
+npx playwright test tests/login-flow.test.ts --project=chromium --headed
+
+Step 3: Push the changes to GitHub
+To update your repository homepage, save the file and run:
+
+bash
+git add README.md
+git commit -m "docs: add instructions on how to create new tests"
+git push
